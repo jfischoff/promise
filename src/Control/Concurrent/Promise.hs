@@ -1,12 +1,14 @@
 {-# LANGUAGE DeriveFunctor #-}
+
 module Control.Concurrent.Promise 
   ( Promise
   , runPromise
-  , liftIO
   ) where
+
 import Control.Concurrent.Async
 import Control.Applicative
 import Control.Monad
+import Control.Monad.IO.Class
 
 newtype Promise a = Promise { unPromise :: IO (Async a) }
   deriving (Functor)
@@ -23,9 +25,8 @@ instance Monad Promise where
    return = liftIO . return
    Promise m >>= f = Promise $ m >>= wait >>= unPromise . f 
 
+instance MonadIO Promise where
+  liftIO = Promise . async
+
 runPromise :: Promise a -> IO a
 runPromise = wait <=< unPromise
-   
-liftIO :: IO a -> Promise a
-liftIO = Promise . async
-

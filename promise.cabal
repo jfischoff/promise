@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                promise
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            A monadic interface for async
 -- description:         
 homepage:            http://github.com/jfischoff/promise
@@ -20,6 +20,8 @@ library
   exposed-modules:     Control.Concurrent.Promise
   -- other-modules:       
   other-extensions:    DeriveFunctor
-  build-depends:       base >=4.7 && <4.8, async >=2.0 && <2.1
+  build-depends:       base         >=4.7 && <5,
+                       async        >=2.0 && <2.1,
+                       transformers >=0.2 && <0.5
   hs-source-dirs:      src
   default-language:    Haskell2010
